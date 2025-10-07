@@ -31,7 +31,28 @@ yarn-error.*
 *.pem
 
 # local env files
+.env
+.env.local
+.env.*
 .env*.local
+
+# IDE / editor
+.vscode/
+.idea/
+
+# logs
+*.log
+
+# coverage
+coverage/
+
+# local databases
+*.sqlite
+
+# mobile config / secrets
+google-services.json
+GoogleService-Info.plist
+eas.json
 
 # typescript
 *.tsbuildinfo
@@ -41,3 +62,8 @@ app-example
 # generated native folders
 /ios
 /android
+
+# Project doc stuff
+project_overview.txt
+sprints.txt
+reqtech.txt
