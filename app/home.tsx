@@ -68,6 +68,13 @@ export default function Home() {
         >
           <Text style={styles.buttonText}>Generate New Plan</Text>
         </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={[styles.button, { backgroundColor: theme.colors.secondary.main }]} 
+          onPress={() => router.push('/history' as any)}
+        >
+          <Text style={styles.buttonText}>View Plan History</Text>
+        </TouchableOpacity>
       </View>
       
       <TouchableOpacity 

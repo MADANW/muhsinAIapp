@@ -4,6 +4,7 @@ import { Linking, LogBox } from 'react-native';
 import { supabase } from './lib/auth/client';
 import { AuthProvider } from './lib/auth/provider';
 import { initPurchases } from './lib/purchases/index';
+import { AnalyticsProvider } from './lib/analytics/analytics.provider';
 
 // Ignore specific React Native warnings
 LogBox.ignoreLogs([
@@ -58,8 +59,9 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <Stack screenOptions={{ headerShadowVisible: false }}>
-        {/* Main screens */}
+      <AnalyticsProvider debug={__DEV__}>
+        <Stack screenOptions={{ headerShadowVisible: false }}>
+          {/* Main screens */}
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen 
           name="profile" 
@@ -87,6 +89,13 @@ export default function RootLayout() {
           name="plan" 
           options={{ 
             title: 'Prayer Plan',
+            headerBackTitle: 'Back',
+          }} 
+        />
+        <Stack.Screen 
+          name="history" 
+          options={{ 
+            title: 'Plan History',
             headerBackTitle: 'Back',
           }} 
         />
@@ -123,6 +132,7 @@ export default function RootLayout() {
           }}
         />
       </Stack>
+      </AnalyticsProvider>
     </AuthProvider>
   );
 }
