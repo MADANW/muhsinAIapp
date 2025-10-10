@@ -4,8 +4,8 @@
 // - Calls the atomic RPC to insert a stub plan + increment usage if allowed
 // - Returns the inserted plan record
 
-import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "@supabase/supabase-js";
+import { serve } from "std/http/server.ts";
 
 // Environment variables should be set in the Edge Function runtime / secret store.
 // Do NOT hard-code secrets here. Use names below and set the real values in
@@ -19,7 +19,7 @@ const cors = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-serve(async (req) => {
+serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: cors });
   }
