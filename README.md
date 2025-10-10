@@ -1,4 +1,8 @@
-# MuhsinAI �✨
+# MuhsinAI ✨
+
+<div align="center">
+  <img src="./assets/images/nobg.png" alt="MuhsinAI Logo" width="200" />
+</div>
 
 AI daily planner for students and young professionals with built-in prayer times, templates, and Pro tier subscription.
 
@@ -10,6 +14,7 @@ MuhsinAI helps users quickly generate structured daily plans that respect prayer
 
 - **Natural Language Planning**: Type what you want to do and get a structured, editable daily plan
 - **Prayer Times Integration**: Automatically includes prayer times based on location
+- **Polished UI with Animations**: Smooth, consistent animations throughout the app
 - **Free Tier**: 3 free AI-generated plans
 - **Pro Subscription**: Unlimited plans, templates, export options, and more
 
@@ -26,10 +31,14 @@ MuhsinAI helps users quickly generate structured daily plans that respect prayer
 ```
 app/                  # Main application code (Expo Router)
   lib/                # Core libraries
+    animations/       # Animation system for consistent UI animations
+    components/       # Reusable UI components
     store.ts          # Zustand store with AsyncStorage persistence
     api.ts            # API wrapper for Edge Functions
   home.tsx            # Home screen
   plan.tsx            # Plan creation screen
+  history.tsx         # Plan history screen
+  plan-detail.tsx     # Plan detail view
   paywall.tsx         # Subscription paywall
   profile.tsx         # User profile
 supabase/             # Supabase configuration
@@ -105,10 +114,18 @@ The app uses Supabase Edge Functions for backend logic. To deploy:
 
 See `project_docs.txt` for detailed deployment instructions (not committed to repo).
 
+## Documentation
+
+The project includes comprehensive documentation to aid developers:
+
+- `docs/sprint_2_feature_summary.md` - Summary of Sprint 2 features and implementations
+- `docs/animation_system_guide.md` - Detailed guide on using the animation system
+- `docs/sprint_2_completion.md` - Sprint 2 completion report and next steps
+
 ## Development Status
 
-- Sprint 1: In Progress (Core foundation and infrastructure)
-- Sprint 2: Not Started (Core value and monetization)
+- Sprint 1: Completed (Core foundation and infrastructure)
+- Sprint 2: Completed (UI Enhancements & Animation System)
 - Sprint 3: Not Started (Polish and store preparation)
 
 ## License

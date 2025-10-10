@@ -1,3 +1,12 @@
+/**
+ * Fix for the history.tsx file
+ * 
+ * This file provides a corrected implementation of the history screen with proper animation
+ * support and structured rendering of plan items.
+ * 
+ * To apply: Copy this content to replace the existing history.tsx file
+ */
+
 import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
@@ -165,7 +174,7 @@ export default function History() {
     return (
       <AnimatedCard 
         index={index} 
-        duration={400} 
+        duration={400}
         style={styles.cardContainer}
       >
         <TouchableOpacity

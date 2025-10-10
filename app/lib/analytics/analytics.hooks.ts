@@ -4,9 +4,9 @@
  * Custom React hooks for analytics integration.
  */
 
+import { usePathname } from 'expo-router';
 import { useEffect } from 'react';
 import { analytics, AnalyticsEvent } from './index';
-import { usePathname } from 'expo-router';
 
 /**
  * Hook to automatically track screen views

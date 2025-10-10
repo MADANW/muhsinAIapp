@@ -5,9 +5,9 @@
  */
 
 import React, { createContext, useContext, useEffect } from 'react';
-import { analytics, AnalyticsEvent } from './index';
-import { useAppLifecycleTracking, useScreenTracking } from './analytics.hooks';
 import { useAuth } from '../auth/provider';
+import { useAppLifecycleTracking, useScreenTracking } from './analytics.hooks';
+import { analytics, AnalyticsEvent } from './index';
 
 // Create context
 type AnalyticsContextType = {

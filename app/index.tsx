@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { analytics, AnalyticsEvent } from './lib/analytics';
 import { useAuth } from './lib/auth/provider';
 import env, { validateEnv } from './lib/env';
 
@@ -10,6 +11,11 @@ export default function Index() {
 
   useEffect(() => {
     if (!isLoading) {
+      // Track app opened event
+      analytics.track(AnalyticsEvent.APP_OPENED, {
+        is_authenticated: !!user
+      });
+      
       if (user) {
         router.replace('/home' as any);
       } else {

@@ -1,10 +1,10 @@
 import { Stack } from "expo-router";
 import { useEffect } from 'react';
 import { Linking, LogBox } from 'react-native';
+import { AnalyticsProvider } from './lib/analytics/analytics.provider';
 import { supabase } from './lib/auth/client';
 import { AuthProvider } from './lib/auth/provider';
 import { initPurchases } from './lib/purchases/index';
-import { AnalyticsProvider } from './lib/analytics/analytics.provider';
 
 // Ignore specific React Native warnings
 LogBox.ignoreLogs([
@@ -60,8 +60,8 @@ export default function RootLayout() {
   return (
     <AuthProvider>
       <AnalyticsProvider debug={__DEV__}>
-        <Stack screenOptions={{ headerShadowVisible: false }}>
-          {/* Main screens */}
+      <Stack screenOptions={{ headerShadowVisible: false }}>
+        {/* Main screens */}
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen 
           name="profile" 
@@ -112,6 +112,13 @@ export default function RootLayout() {
           options={{ 
             title: 'Test RevenueCat',
             headerShown: true,
+          }} 
+        />
+        <Stack.Screen 
+          name="plan-detail" 
+          options={{ 
+            title: 'Plan Details',
+            headerBackTitle: 'Back',
           }} 
         />
         

@@ -7,15 +7,16 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Share,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
+import { usePlanAnalytics } from './lib/analytics/analytics.hooks';
 import { callPlan } from './lib/api';
 import { useAuth } from './lib/auth/provider';
-import { usePlanAnalytics } from './lib/analytics/analytics.hooks';
 import { useStore } from './lib/store';
 import { useTheme } from './theme/ThemeProvider';
 
@@ -266,9 +267,37 @@ export default function Plan() {
             
             <TouchableOpacity 
               style={[styles.actionButton, { borderColor: theme.colors.current.border }]}
-              onPress={() => {
-                // Share functionality would go here
-                Alert.alert('Coming Soon', 'Sharing will be available in a future update');
+              onPress={async () => {
+                try {
+                  // Format the plan content for sharing
+                  const dayTitle = generatedPlan?.day || 'Daily Plan';
+                  const formattedDate = new Date(generatedPlan?.generated_at || new Date()).toLocaleDateString();
+                  
+                  // Create a text representation of the plan
+                  let shareText = `${dayTitle} (${formattedDate})\n\n`;
+                  
+                  // Add each time block
+                  generatedPlan?.blocks.forEach(block => {
+                    shareText += `${block.time} - ${block.title}\n`;
+                    if (block.description) {
+                      shareText += `${block.description}\n`;
+                    }
+                    shareText += '\n';
+                  });
+                  
+                  // Add app attribution
+                  shareText += '\nGenerated with MuhsinAI';
+                  
+                  // Use Share API to share the plan
+                  await Share.share({
+                    message: shareText
+                  });
+                  
+                  // Track share event
+                  planAnalytics.trackPlanViewed('new_plan', { action: 'share' });
+                } catch (error) {
+                  Alert.alert('Error', 'Failed to share the plan');
+                }
               }}
             >
               <FontAwesome name="share" size={20} color={theme.colors.current.textPrimary} />
