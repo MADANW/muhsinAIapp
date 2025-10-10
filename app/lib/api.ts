@@ -8,7 +8,7 @@ type PlanRequest = {
 };
 
 export async function callPlan(body: PlanRequest) {
-  // simple wrapper that calls the Supabase Edge Function 'plan-stub'
+  // Wrapper that calls the Supabase Edge Function for plan generation
   const { SUPABASE_URL } = env;
 
   // Get current session for auth token
@@ -19,21 +19,38 @@ export async function callPlan(body: PlanRequest) {
     throw new Error('No auth token available. Please sign in.');
   }
 
-  const url = `${SUPABASE_URL}/functions/v1/plan-stub`;
+  // Determine which function to call - use the full AI plan in production
+  // and the stub version for development if needed
+  const functionName = process.env.NODE_ENV === 'development' && process.env.USE_PLAN_STUB 
+    ? 'plan-stub' 
+    : 'plan';
 
-  const resp = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  });
+  const url = `${SUPABASE_URL}/functions/v1/${functionName}`;
 
-  if (!resp.ok) {
-    const text = await resp.text();
-    throw new Error(`plan call failed: ${resp.status} ${text}`);
+  try {
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!resp.ok) {
+      // Handle specific error cases
+      if (resp.status === 402) {
+        throw new Error('usage_limit_reached');
+      }
+      
+      const errorData = await resp.json().catch(() => null);
+      const errorMsg = errorData?.error || `Status ${resp.status}`;
+      throw new Error(`Plan generation failed: ${errorMsg}`);
+    }
+
+    return resp.json();
+  } catch (error) {
+    console.error('Error calling plan function:', error);
+    throw error;
   }
-
-  return resp.json();
 }

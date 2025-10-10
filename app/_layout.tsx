@@ -11,6 +11,13 @@ LogBox.ignoreLogs([
 ]);
 
 export default function RootLayout() {
+  // Initialize RevenueCat on app startup
+  useEffect(() => {
+    initPurchases().catch(error => {
+      console.error('Failed to initialize RevenueCat:', error);
+    });
+  }, []);
+  
   useEffect(() => {
     // Handle deep links (magic link authentication)
     const handleDeepLink = (event: { url: string }) => {
@@ -50,7 +57,8 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <Stack>
+      <Stack screenOptions={{ headerShadowVisible: false }}>
+        {/* Main screens */}
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen 
           name="profile" 
@@ -63,9 +71,48 @@ export default function RootLayout() {
           name="signin" 
           options={{ 
             title: 'Sign In',
-            headerBackTitle: 'Back',
+            headerShown: false,
             presentation: 'modal',
           }} 
+        />
+        <Stack.Screen 
+          name="home" 
+          options={{ 
+            title: 'Home',
+            headerBackTitle: 'Back',
+          }} 
+        />
+        <Stack.Screen 
+          name="plan" 
+          options={{ 
+            title: 'Prayer Plan',
+            headerBackTitle: 'Back',
+          }} 
+        />
+        <Stack.Screen 
+          name="paywall" 
+          options={{ 
+            title: 'Upgrade',
+            headerShown: false,
+            presentation: 'modal',
+          }} 
+        />
+        
+        {/* Auth flow */}
+        <Stack.Screen
+          name="auth/signin"
+          options={{
+            title: 'Sign In',
+            headerShown: false,
+            presentation: 'modal',
+          }}
+        />
+        <Stack.Screen
+          name="auth/magic-link-sent"
+          options={{
+            title: 'Magic Link Sent',
+            headerShown: false,
+          }}
         />
       </Stack>
     </AuthProvider>

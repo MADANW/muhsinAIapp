@@ -11,9 +11,9 @@ export default function Index() {
   useEffect(() => {
     if (!isLoading) {
       if (user) {
-        router.replace('profile' as any);
+        router.replace('/home' as any);
       } else {
-        router.replace('signin' as any);
+        router.replace('/auth/signin' as any);
       }
     }
   }, [user, isLoading, router]);
@@ -28,7 +28,7 @@ export default function Index() {
         <ActivityIndicator size="large" color="#007bff" />
       ) : (
         <View style={styles.debugContainer}>
-          <Text style={styles.title}>Debug Info:</Text>
+          <Text style={styles.title}>MuhsinAI - Initialization</Text>
           <Text style={styles.info}>Environment Valid: {valid ? "✓" : "✗"}</Text>
           {!valid && (
             <Text style={styles.info}>Missing: {missing.join(', ')}</Text>
@@ -36,7 +36,7 @@ export default function Index() {
           <Text style={styles.info}>SUPABASE_URL: {SUPABASE_URL ? "Set ✓" : "Not set ✗"}</Text>
           <Text style={styles.info}>SUPABASE_ANON_KEY: {SUPABASE_ANON_KEY ? "Set ✓" : "Not set ✗"}</Text>
           <Text style={styles.info}>User: {user ? user.email : "Not signed in"}</Text>
-          <Text style={styles.button} onPress={() => router.replace('signin' as any)}>
+          <Text style={styles.button} onPress={() => router.replace('/auth/signin' as any)}>
             Go to Sign In
           </Text>
         </View>
