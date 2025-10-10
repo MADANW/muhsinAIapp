@@ -5,6 +5,7 @@ type State = {
   isPro: boolean;
   usageCount: number;
   setPro: (v: boolean) => Promise<void>;
+  setUsageCount: (count: number) => Promise<void>;
   incUsage: () => Promise<void>;
   resetUsage: () => Promise<void>;
 };
@@ -51,6 +52,12 @@ export const useStore = createFn((set: any, get: any) => {
       set({ isPro: v });
       try {
         await AsyncStorage.setItem(STORAGE_KEYS.isPro, v ? "true" : "false");
+      } catch {}
+    },
+    setUsageCount: async (count: number) => {
+      set({ usageCount: count });
+      try {
+        await AsyncStorage.setItem(STORAGE_KEYS.usageCount, String(count));
       } catch {}
     },
     incUsage: async () => {

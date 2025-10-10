@@ -48,23 +48,44 @@ __tests__/            # Unit tests
 1. Install dependencies:
 
    ```bash
-   npm install --legacy-peer-deps
+   npm install
    ```
 
-2. Create `.env` file with Supabase credentials:
-
-   ```
-   SUPABASE_URL=your_supabase_url
-   SUPABASE_ANON_KEY=your_supabase_anon_key
-   ```
-
-3. Start the development server:
+2. Set up environment variables:
 
    ```bash
-   npx expo start
+   cp .env.example .env
+   ```
+   
+   Edit the `.env` file and fill in your Supabase credentials:
+   
+   ```
+   SUPABASE_URL=https://your-project-id.supabase.co
+   SUPABASE_ANON_KEY=your-supabase-anon-key
+   ```
+   
+   You can find these values in your Supabase dashboard under Project Settings > API.
+
+3. Verify your environment variables:
+
+   ```bash
+   npm run check-env
    ```
 
-4. Open the app in Expo Go or a simulator/emulator
+   This will validate your environment configuration and highlight any issues.
+
+4. Run the app using Expo:
+
+   ```bash
+   npm start
+   ```
+   
+   **Important**: Environment variables in Expo are loaded through `app.config.js` and accessed via the `env.ts` utility. If you encounter "Missing SUPABASE_URL" errors, ensure your `.env` file exists and has the correct values.
+
+5. Open the app in Expo Go or a simulator/emulator:
+   - Scan the QR code with your phone's camera (iOS) or Expo Go app (Android)
+   - Press 'i' to open in iOS simulator
+   - Press 'a' to open in Android emulator
 
 ## Testing
 
