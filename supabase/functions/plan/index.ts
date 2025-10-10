@@ -7,7 +7,7 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { OpenAI } from "openai";
-import { serve } from "std/http/server.ts";
+import { serve } from "std/http/server";
 
 // Environment variables should be set in the Edge Function runtime / secret store.
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
@@ -123,7 +123,7 @@ serve(async (req: Request) => {
 
     // Parse request body
     const requestData = await req.json();
-    const { prompt, options = {} } = requestData;
+    const { prompt, options: _options = {} } = requestData;
 
     if (!prompt || typeof prompt !== "string" || prompt.trim() === "") {
       return new Response(JSON.stringify({ error: "invalid_prompt" }), {

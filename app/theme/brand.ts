@@ -14,6 +14,9 @@ export const brandConfig = {
     // Secondary brand color
     secondary: '#3D6145', // MuhsinAI medium green
     
+    // Accent color for highlights and interactive elements
+    accent: '#4A7456', // MuhsinAI lighter green
+    
     // Darker shade for pressed states and accents
     dark: '#203425', // MuhsinAI darker green
     
@@ -50,7 +53,9 @@ export const brandConfig = {
   assets: {
     // Logo variations
     logo: {
-      primary: require('../../assets/images/icon.png'),
+      primary: require('../../assets/images/logo.ico'),
+      noBg: require('../../assets/images/nobg.ico'),
+      inverse: require('../../assets/images/inverse.ico'),
       // Add variations if needed:
       // horizontal: require('../../assets/images/logo-horizontal.png'),
       // monochrome: require('../../assets/images/logo-mono.png'),

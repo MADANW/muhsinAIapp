@@ -1,10 +1,18 @@
 # MuhsinAI ✨
 
 <div align="center">
-  <img src="./assets/images/nobg.png" alt="MuhsinAI Logo" width="200" />
+  <img src="./assets/images/nobg.ico" alt="MuhsinAI Logo - No Background" width="200" />
 </div>
 
 AI daily planner for students and young professionals with built-in prayer times, templates, and Pro tier subscription.
+
+## Logo Variants
+
+The app includes three logo variants for different use cases:
+
+- **Standard Logo** (`logo.ico`): Used for the app icon and primary branding
+- **No Background** (`nobg.ico`): Transparent background version for in-app usage
+- **Inverse** (`inverse.ico`): Inverted colors for use on dark backgrounds
 
 ## Overview
 
@@ -41,6 +49,11 @@ app/                  # Main application code (Expo Router)
   plan-detail.tsx     # Plan detail view
   paywall.tsx         # Subscription paywall
   profile.tsx         # User profile
+assets/
+  images/             # App images and icons
+    logo.ico          # Standard app icon
+    nobg.ico          # Logo with transparent background for in-app usage
+    inverse.ico       # Inverted logo for dark backgrounds
 supabase/             # Supabase configuration
   functions/          # Edge Functions
     plan-stub/        # Plan generation function
@@ -121,11 +134,17 @@ The project includes comprehensive documentation to aid developers:
 - `docs/sprint_2_feature_summary.md` - Summary of Sprint 2 features and implementations
 - `docs/animation_system_guide.md` - Detailed guide on using the animation system
 - `docs/sprint_2_completion.md` - Sprint 2 completion report and next steps
+- `docs/logo_usage_guide.md` - Guidelines for using the different logo variants
+- `docs/interim_sprint_plan.md` - Plan for the code cleanup interim sprint
+- `docs/code_cleanup_tasks.md` - Detailed task breakdown for code cleanup
+- `docs/app_store_readiness_checklist.md` - Testing checklist for App Store submission
+- `docs/code_review_checklist.md` - Standards for code review during cleanup
 
 ## Development Status
 
 - Sprint 1: Completed (Core foundation and infrastructure)
 - Sprint 2: Completed (UI Enhancements & Animation System)
+- Interim Sprint: In Progress (Code Cleanup & Bug Fixes)
 - Sprint 3: Not Started (Polish and store preparation)
 
 ## License

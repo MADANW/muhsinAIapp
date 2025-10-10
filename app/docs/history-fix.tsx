@@ -20,12 +20,12 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import { usePlanAnalytics, useScreenTracking } from './lib/analytics/analytics.hooks';
-import * as Animations from './lib/animations';
-import { supabase } from './lib/auth/client';
-import { useAuth } from './lib/auth/provider';
-import AnimatedCard from './lib/components/AnimatedCard';
-import { useTheme } from './theme/ThemeProvider';
+import { usePlanAnalytics, useScreenTracking } from '../lib/analytics/analytics.hooks';
+import * as Animations from '../lib/animations';
+import { supabase } from '../lib/auth/client';
+import { useAuth } from '../lib/auth/provider';
+import AnimatedCard from '../lib/components/AnimatedCard';
+import { useTheme } from '../theme/ThemeProvider';
 
 // Types for plan data
 interface Plan {

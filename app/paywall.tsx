@@ -112,7 +112,7 @@ export default function Paywall() {
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
           <Image
-            source={require('../assets/images/logo.png')}
+            source={require('../assets/images/nobg.ico')}
             style={styles.logo}
             contentFit="contain"
           />

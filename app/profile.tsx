@@ -10,7 +10,7 @@ export default function Profile() {
 
   const handleSignOut = async () => {
     await signOut();
-    router.replace('signin');
+    router.replace('/signin');
   };
 
   if (isLoading) {
@@ -22,7 +22,7 @@ export default function Profile() {
   }
 
   if (!user) {
-    router.replace('signin' as any);
+    router.replace('/signin');
     return null;
   }
 

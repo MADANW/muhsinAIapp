@@ -33,8 +33,8 @@ export default function CreatePlan() {
   const [error, setError] = useState<string | null>(null);
   
   // Get usage count from store
-  const usageCount = useStore((state) => state.usageCount);
-  const isPro = useStore((state) => state.isPro);
+  const usageCount = useStore((state: { usageCount: number }) => state.usageCount);
+  const isPro = useStore((state: { isPro: boolean }) => state.isPro);
   
   // Function to generate a plan
   const handleCreatePlan = async () => {
@@ -59,17 +59,17 @@ export default function CreatePlan() {
       } else {
         throw new Error('No plan returned from API');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Plan creation error:', err);
       
       // Handle usage limit errors
-      if (err.message.includes('usage_limit_reached')) {
+      if (err instanceof Error && err.message.includes('usage_limit_reached')) {
         // Navigate to paywall
         router.push('/paywall');
         return;
       }
       
-      setError(err.message || 'Failed to create plan. Please try again.');
+      setError(err instanceof Error ? err.message : 'Failed to create plan. Please try again.');
     } finally {
       setIsLoading(false);
     }
