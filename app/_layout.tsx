@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Linking, LogBox } from 'react-native';
 import { supabase } from './lib/auth/client';
 import { AuthProvider } from './lib/auth/provider';
+import { initPurchases } from './lib/purchases/index';
 
 // Ignore specific React Native warnings
 LogBox.ignoreLogs([
@@ -13,7 +14,7 @@ LogBox.ignoreLogs([
 export default function RootLayout() {
   // Initialize RevenueCat on app startup
   useEffect(() => {
-    initPurchases().catch(error => {
+    initPurchases().catch((error: any) => {
       console.error('Failed to initialize RevenueCat:', error);
     });
   }, []);
@@ -95,6 +96,13 @@ export default function RootLayout() {
             title: 'Upgrade',
             headerShown: false,
             presentation: 'modal',
+          }} 
+        />
+        <Stack.Screen 
+          name="test-purchases" 
+          options={{ 
+            title: 'Test RevenueCat',
+            headerShown: true,
           }} 
         />
         

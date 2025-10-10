@@ -86,6 +86,16 @@ export default function Home() {
         </TouchableOpacity>
       )}
       
+      {/* Test Environment Button for development */}
+      {__DEV__ && (
+        <TouchableOpacity 
+          style={[styles.button, { backgroundColor: '#FF9800', marginTop: 10 }]} 
+          onPress={() => router.push('/test-purchases' as any)}
+        >
+          <Text style={styles.buttonText}>Test RevenueCat (Dev Only)</Text>
+        </TouchableOpacity>
+      )}
+      
       <TouchableOpacity 
         style={styles.signOutButton} 
         onPress={signOut}

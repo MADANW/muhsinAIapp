@@ -58,12 +58,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(session?.user || null);
 
         if (event === 'SIGNED_IN' && session?.user) {
+          // Ensure user has a profile
           await ensureProfile(session.user);
+          
+          try {
+            // Import RevenueCat dynamically to avoid circular dependencies
+            const { setUserId } = await import('../purchases/index');
+            // Set RevenueCat user ID to track subscriptions
+            await setUserId(session.user.id);
+          } catch (error) {
+            console.error('Failed to set RevenueCat user ID:', error);
+          }
         }
 
         if (event === 'SIGNED_OUT') {
           // Reset local state when user signs out
           resetUsage();
+          
+          try {
+            // Import RevenueCat dynamically to avoid circular dependencies
+            const { resetUserId } = await import('../purchases/index');
+            // Reset RevenueCat user ID when signing out
+            await resetUserId();
+          } catch (error) {
+            console.error('Failed to reset RevenueCat user ID:', error);
+          }
         }
       }
     );
