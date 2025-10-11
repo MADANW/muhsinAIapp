@@ -10,8 +10,8 @@ import { OpenAI } from "openai";
 import { serve } from "std/http/server";
 
 // Environment variables should be set in the Edge Function runtime / secret store.
-const supabaseUrl = Deno.env.get("URL")!;
-const supabaseAnonKey = Deno.env.get("KEY")!;
+const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
 const openaiApiKey = Deno.env.get("OPENAI_API_KEY")!;
 
 // OpenAI client initialization

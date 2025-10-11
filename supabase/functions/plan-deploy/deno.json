@@ -1,11 +1,6 @@
 {
   "tasks": {
-    "start": "deno run --allow-net --allow-env --allow-read --watch index.ts",
-    "deploy": "supabase functions deploy plan"
-  },
-  "compilerOptions": {
-    "allowJs": true,
-    "strict": true
+    "start": "deno run --allow-net --allow-env --allow-read index.ts"
   },
   "imports": {
     "std/http/server": "https://deno.land/std@0.177.0/http/server.ts",
