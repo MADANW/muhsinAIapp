@@ -1,164 +1,280 @@
 # MuhsinAI ✨
 
 <div align="center">
-  <img src="./assets/images/nobg.ico" alt="MuhsinAI Logo - No Background" width="200" />
+  <img src="./assets/images/png/logo.png" alt="MuhsinAI Logo" width="200" />
 </div>
 
-AI daily planner for students and young professionals with built-in prayer times, templates, and Pro tier subscription.
+**AI-Powered Islamic Prayer Plans** - Transform your spiritual practice with personalized, AI-generated Islamic prayer plans that adapt to your daily life.
 
-## Logo Variants
+## 🌟 Vision
 
-The app includes three logo variants for different use cases:
+MuhsinAI bridges technology and spirituality, helping Muslims worldwide deepen their connection with Allah through structured, personalized prayer plans powered by artificial intelligence.
 
-- **Standard Logo** (`logo.ico`): Used for the app icon and primary branding
-- **No Background** (`nobg.ico`): Transparent background version for in-app usage
-- **Inverse** (`inverse.ico`): Inverted colors for use on dark backgrounds
+## 📱 Platform Status
 
-## Overview
+### Mobile App (Sprint 2 - Completed ✅)
+- **Status**: Feature-complete, ready for testing
+- **Platform**: iOS/Android via Expo
+- **Authentication**: Magic link email authentication  
+- **Payments**: RevenueCat integration
+- **Theme**: Full dark/light mode support
+- **Assets**: Optimized PNG asset system
 
-MuhsinAI helps users quickly generate structured daily plans that respect prayer times and personal schedules through natural language commands. The app offers 3 free plans before requiring a subscription to the Pro tier.
+### Web Platform (Current Development 🚀)
+- **Status**: In development (Sprint Web)
+- **Goal**: Public web version for user acquisition and testing
+- **Benefits**: No app store barriers, easier deployment, broader accessibility
+- **Timeline**: Current sprint focus
 
-### Features
+## ✨ Core Features
 
-- **Natural Language Planning**: Type what you want to do and get a structured, editable daily plan
-- **Prayer Times Integration**: Automatically includes prayer times based on location
-- **Polished UI with Animations**: Smooth, consistent animations throughout the app
-- **Free Tier**: 3 free AI-generated plans
-- **Pro Subscription**: Unlimited plans, templates, export options, and more
+- **🤖 AI Prayer Plan Generation**: Natural language input creates personalized Islamic prayer schedules
+- **⏰ Prayer Time Integration**: Automatically respects prayer times and Islamic calendar
+- **📊 Progress Tracking**: Monitor your spiritual journey with detailed analytics
+- **🎨 Beautiful UI**: Polished interface with smooth animations and themes
+- **💳 Flexible Pricing**: Free tier (3 plans) + Pro subscription for unlimited access
+- **🔒 Secure Authentication**: Magic link email authentication via Supabase
 
-## Tech Stack
+## 🛠 Tech Stack
 
-- **Frontend**: Expo (React Native), Expo Router, Zustand for state management
-- **Backend**: Supabase (Auth, DB, Edge Functions)
-- **AI Integration**: OpenAI (via Edge Function)
-- **Testing**: Jest, React Testing Library
+**Frontend**
+- **Mobile**: Expo (React Native) with Expo Router
+- **Web**: Expo Web with responsive design
+- **State**: Zustand with AsyncStorage persistence
+- **Styling**: React Native with theme system
+
+**Backend & Services**
+- **Database**: Supabase (PostgreSQL with RLS)
+- **Authentication**: Supabase Auth with magic links
+- **AI Integration**: OpenAI GPT via Supabase Edge Functions
+- **Payments**: RevenueCat (mobile) / Stripe (web)
+
+**Development & Deployment**
+- **Testing**: Jest + React Testing Library
 - **CI/CD**: GitHub Actions
+- **Hosting**: Vercel/Netlify (web), Expo (mobile)
 
-## Project Structure
+## 📁 Project Structure
 
 ```
-app/                  # Main application code (Expo Router)
-  lib/                # Core libraries
-    animations/       # Animation system for consistent UI animations
-    components/       # Reusable UI components
-    store.ts          # Zustand store with AsyncStorage persistence
-    api.ts            # API wrapper for Edge Functions
-  home.tsx            # Home screen
-  plan.tsx            # Plan creation screen
-  history.tsx         # Plan history screen
-  plan-detail.tsx     # Plan detail view
-  paywall.tsx         # Subscription paywall
-  profile.tsx         # User profile
+app/                     # Main application code (Expo Router)
+├── lib/                 # Core libraries and utilities
+│   ├── auth/           # Authentication system (Supabase)
+│   ├── analytics/      # Event tracking and analytics
+│   ├── purchases/      # Payment integration (RevenueCat)
+│   ├── assetRegistry.ts # Centralized asset management
+│   └── store.ts        # Global state management (Zustand)
+├── theme/              # Design system and theming
+│   ├── ThemeProvider.tsx # Theme context and provider
+│   ├── ImageRegistry.ts  # Image asset registry
+│   └── constants.ts     # Colors, typography, spacing
+├── auth/               # Authentication screens
+│   ├── signin.tsx      # Magic link sign-in
+│   └── magic-link-sent.tsx # Confirmation screen
+├── home.tsx            # Main dashboard
+├── plan.tsx            # Prayer plan creation
+├── history.tsx         # Plan history and analytics
+├── paywall.tsx         # Subscription management
+└── _layout.tsx         # Root layout with providers
+
 assets/
-  images/             # App images and icons
-    logo.ico          # Standard app icon
-    nobg.ico          # Logo with transparent background for in-app usage
-    inverse.ico       # Inverted logo for dark backgrounds
-supabase/             # Supabase configuration
-  functions/          # Edge Functions
-    plan-stub/        # Plan generation function
-  migrations/         # Database migrations
-    *_create_core_tables.sql
-    *_consume_request_and_insert_plan.sql
-    *_add_rls_policies.sql
-__tests__/            # Unit tests
-.github/workflows/    # CI configuration
+├── images/png/         # Optimized PNG assets
+│   ├── logo.png        # Main logo
+│   ├── nobg.png        # Transparent background
+│   └── inverse.png     # Dark theme variant
+└── images/             # Additional images
+
+supabase/               # Backend configuration
+├── functions/          # Edge Functions (AI integration)
+└── migrations/         # Database schema
+
+docs/                   # Comprehensive documentation
+└── [various guides and sprint reports]
 ```
 
-## Getting Started
+## 🚀 Getting Started
 
-1. Install dependencies:
+### Prerequisites
+- Node.js 18+ and npm
+- Expo CLI (`npm install -g @expo/cli`)
+- Git for version control
 
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/MADANW/muhsinAIapp.git
+   cd muhsinAIapp
+   ```
+
+2. **Install dependencies:**
    ```bash
    npm install
    ```
 
-2. Set up environment variables:
-
+3. **Set up environment variables:**
    ```bash
    cp .env.example .env
    ```
    
-   Edit the `.env` file and fill in your credentials:
-   
+   Edit `.env` with your credentials:
    ```bash
-   # Required - Get these from your Supabase dashboard
+   # Supabase Configuration
    SUPABASE_URL=https://your-project-id.supabase.co
    SUPABASE_ANON_KEY=your-supabase-anon-key
    
-   # For backend - Add to your Supabase Edge Function environment
-   JWT_SECRET=your-jwt-secret
-   OPENAI_API_KEY=sk-your-openai-key
-   
-   # For testing purchases (optional)
+   # RevenueCat (Mobile Payments)
    REVENUECAT_TEST_KEY=test_your-test-key
-   
-   # For production (only needed when deploying)
-   REVENUECAT_APPLE_API_KEY=appl_your-apple-key
-   REVENUECAT_GOOGLE_API_KEY=goog_your-google-key
+   # Production keys (add when deploying)
+   # REVENUECAT_APPLE_API_KEY=appl_your-apple-key
+   # REVENUECAT_GOOGLE_API_KEY=goog_your-google-key
    ```
-   
-   **🔒 Security Note**: Never commit your actual API keys to the repository. The `.env` file is gitignored for security.
 
-3. Verify your environment variables:
-
+4. **Verify configuration:**
    ```bash
-   npm run check-env
+   npm run check-env  # Validates environment setup
    ```
 
-   This will validate your environment configuration and highlight any issues.
+### Development
 
-4. Run the app using Expo:
-
-   ```bash
-   npm start
-   ```
-   
-   **Important**: Environment variables in Expo are loaded through `app.config.js` and accessed via the `env.ts` utility. If you encounter "Missing SUPABASE_URL" errors, ensure your `.env` file exists and has the correct values.
-
-5. Open the app in Expo Go or a simulator/emulator:
-   - Scan the QR code with your phone's camera (iOS) or Expo Go app (Android)
-   - Press 'i' to open in iOS simulator
-   - Press 'a' to open in Android emulator
-
-## Testing
-
-Run the unit tests:
-
+**Mobile Development:**
 ```bash
-npm test
+npm start           # Start Expo development server
+# Then scan QR code or press 'i' for iOS, 'a' for Android
 ```
 
-## Deployment
+**Web Development:**
+```bash
+npm run web         # Start web development server
+# Opens at http://localhost:8081
+```
 
-The app uses Supabase Edge Functions for backend logic. To deploy:
+**Testing:**
+```bash
+npm test           # Run unit tests
+npm run test:watch # Run tests in watch mode
+```
 
-1. Install Supabase CLI
-2. Link your project: `supabase link --project-ref <project-ref>`
-3. Deploy functions: `supabase functions deploy plan-stub`
+## 🌐 Web Deployment
 
-See `project_docs.txt` for detailed deployment instructions (not committed to repo).
+The web version is optimized for production deployment:
 
-## Documentation
+1. **Build for production:**
+   ```bash
+   npm run build:web
+   ```
 
-The project includes comprehensive documentation to aid developers:
+2. **Deploy to Vercel/Netlify:**
+   ```bash
+   # Vercel
+   vercel --prod
+   
+   # Netlify
+   netlify deploy --prod --dir=dist
+   ```
 
-- `docs/sprint_2_feature_summary.md` - Summary of Sprint 2 features and implementations
-- `docs/animation_system_guide.md` - Detailed guide on using the animation system
-- `docs/sprint_2_completion.md` - Sprint 2 completion report and next steps
-- `docs/logo_usage_guide.md` - Guidelines for using the different logo variants
-- `docs/interim_sprint_plan.md` - Plan for the code cleanup interim sprint
-- `docs/code_cleanup_tasks.md` - Detailed task breakdown for code cleanup
-- `docs/app_store_readiness_checklist.md` - Testing checklist for App Store submission
-- `docs/code_review_checklist.md` - Standards for code review during cleanup
+3. **Configure domain and SSL** through your hosting provider
 
-## Development Status
+## 📱 Mobile Deployment
 
-- Sprint 1: Completed (Core foundation and infrastructure)
-- Sprint 2: Completed (UI Enhancements & Animation System)
-- Interim Sprint: In Progress (Code Cleanup & Bug Fixes)
-- Sprint 3: Not Started (Polish and store preparation)
+**Development builds:**
+```bash
+npx expo build:ios     # iOS build
+npx expo build:android # Android build
+```
 
-## License
+**Production:** Configure app store accounts and follow Expo's deployment guides.
 
-Proprietary - All Rights Reserved
+## 📋 Development Status & Roadmap
+
+### ✅ Sprint 2 (Mobile Foundation) - Completed
+- **Authentication**: Magic link email authentication
+- **UI/UX**: Dark/light theme system with smooth animations  
+- **Assets**: Converted to optimized PNG asset system
+- **Payments**: RevenueCat integration with test keys
+- **Performance**: Fixed asset loading and bundle optimization
+- **Code Quality**: Removed hardcoded values, improved TypeScript types
+
+### 🚀 Sprint Web (Current) - In Progress
+**Goal**: Launch public web version for user acquisition
+
+**Phase 1: Web Adaptation**
+- [ ] Configure responsive design for desktop/tablet
+- [ ] Adapt authentication for web URLs
+- [ ] Implement web-compatible payment system
+- [ ] Optimize performance and SEO
+
+**Phase 2: Production Ready**
+- [ ] Set up hosting and domain
+- [ ] Create landing page with demos
+- [ ] Analytics and conversion tracking
+- [ ] User testing and feedback integration
+
+### 🔮 Future Sprints
+- **Sprint 3**: Mobile App Store submission (when resources allow)
+- **Sprint 4**: Advanced features (custom templates, sharing, etc.)
+- **Sprint 5**: Internationalization and accessibility
+
+## 🧪 Testing Strategy
+
+**Automated Testing:**
+- Unit tests for core logic and utilities
+- Integration tests for authentication flows
+- Component testing for UI interactions
+
+**Manual Testing:**
+- Cross-browser compatibility (Chrome, Firefox, Safari, Edge)
+- Mobile responsiveness testing
+- Payment flow validation
+- Performance testing on various devices
+
+## 📊 Analytics & Monitoring
+
+**Key Metrics:**
+- User conversion rates (free → pro)
+- Prayer plan completion rates
+- Feature usage analytics
+- Performance monitoring
+
+**Tools:**
+- Supabase Analytics for backend metrics
+- Custom event tracking for user behavior
+- Error monitoring and crash reporting
+
+## 🤝 Contributing
+
+This is a proprietary project. For development team members:
+
+1. Create feature branches from `main`
+2. Follow the established code style and TypeScript patterns
+3. Add tests for new features
+4. Update documentation for significant changes
+5. Request code review before merging
+
+## 📝 Documentation
+
+**For Developers:**
+- `docs/` - Comprehensive guides and sprint reports
+- Inline code documentation for complex logic
+- API documentation for backend functions
+
+**For Users:**
+- In-app onboarding and help system
+- Web landing page with feature explanations
+- Prayer plan templates and examples
+
+## 📄 License
+
+**Proprietary Software** - All Rights Reserved
+
+This software is proprietary and confidential. Unauthorized copying, distribution, or modification is strictly prohibited.
+
+---
+
+<div align="center">
+
+**Built with ❤️ for the Muslim community**
+
+[Website](https://muhsinai.com) • [Support](mailto:support@muhsinai.com) • [Privacy](https://muhsinai.com/privacy)
+
+</div>

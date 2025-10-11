@@ -1,4 +1,3 @@
-import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -8,9 +7,8 @@ import { useTheme } from './theme/ThemeProvider';
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [socialLoading, setSocialLoading] = useState<'google' | 'apple' | null>(null);
   const [isSent, setIsSent] = useState(false);
-  const { signIn, signInWithGoogle, signInWithApple } = useAuth();
+  const { signIn } = useAuth();
   const router = useRouter();
   const theme = useTheme();
 
@@ -37,67 +35,36 @@ export default function SignIn() {
       setIsLoading(false);
     }
   };
-  
-  // Function to handle sign in with Google
-  const handleGoogleSignIn = async () => {
-    setSocialLoading('google');
-    
-    try {
-      const { success, error } = await signInWithGoogle();
-      
-      if (!success) {
-        Alert.alert('Sign-in failed', error?.message || 'Failed to sign in with Google');
-      }
-    } catch (err) {
-      Alert.alert('Error', 'Failed to sign in with Google. Please try again later.');
-      console.error(err);
-    } finally {
-      setSocialLoading(null);
-    }
-  };
-  
-  // Function to handle sign in with Apple
-  const handleAppleSignIn = async () => {
-    setSocialLoading('apple');
-    
-    try {
-      const { success, error } = await signInWithApple();
-      
-      if (!success) {
-        Alert.alert('Sign-in failed', error?.message || 'Failed to sign in with Apple');
-      }
-    } catch (err) {
-      Alert.alert('Error', 'Failed to sign in with Apple. Please try again later.');
-      console.error(err);
-    } finally {
-      setSocialLoading(null);
-    }
-  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to MuhsinAI</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.current.background }]}>
+      <Text style={[styles.title, { color: theme.colors.current.textPrimary }]}>Welcome to MuhsinAI</Text>
       
       {!isSent ? (
         <>
-          <Text style={styles.subtitle}>
+          <Text style={[styles.subtitle, { color: theme.colors.current.textSecondary }]}>
             Enter your email to sign in or create an account
           </Text>
           
           <TextInput
-            style={styles.input}
+            style={[styles.input, { 
+              backgroundColor: theme.colors.current.surface,
+              borderColor: theme.colors.current.border,
+              color: theme.colors.current.textPrimary
+            }]}
             placeholder="you@example.com"
+            placeholderTextColor={theme.colors.current.textSecondary}
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
             keyboardType="email-address"
-            editable={!isLoading && socialLoading === null}
+            editable={!isLoading}
           />
           
           <TouchableOpacity
-            style={[styles.button, (isLoading || socialLoading !== null) && styles.buttonDisabled]}
+            style={[styles.button, isLoading && styles.buttonDisabled]}
             onPress={handleSignIn}
-            disabled={isLoading || socialLoading !== null}
+            disabled={isLoading}
           >
             {isLoading ? (
               <ActivityIndicator color="#fff" />
@@ -105,49 +72,11 @@ export default function SignIn() {
               <Text style={styles.buttonText}>Send Magic Link</Text>
             )}
           </TouchableOpacity>
-          
-          <View style={styles.divider}>
-            <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>or continue with</Text>
-            <View style={styles.dividerLine} />
-          </View>
-          
-          <View style={styles.socialButtonsContainer}>
-            <TouchableOpacity
-              style={styles.socialButton}
-              onPress={handleGoogleSignIn}
-              disabled={isLoading || socialLoading !== null}
-            >
-              {socialLoading === 'google' ? (
-                <ActivityIndicator size="small" color={theme.colors.current.textPrimary} />
-              ) : (
-                <>
-                  <FontAwesome name="google" size={18} color={theme.colors.current.textPrimary} style={styles.socialIcon} />
-                  <Text style={styles.socialButtonText}>Google</Text>
-                </>
-              )}
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              style={styles.socialButton}
-              onPress={handleAppleSignIn}
-              disabled={isLoading || socialLoading !== null}
-            >
-              {socialLoading === 'apple' ? (
-                <ActivityIndicator size="small" color={theme.colors.current.textPrimary} />
-              ) : (
-                <>
-                  <FontAwesome name="apple" size={22} color={theme.colors.current.textPrimary} style={styles.socialIcon} />
-                  <Text style={styles.socialButtonText}>Apple</Text>
-                </>
-              )}
-            </TouchableOpacity>
-          </View>
         </>
       ) : (
         <View style={styles.sentContainer}>
-          <Text style={styles.sentTitle}>Check your email</Text>
-          <Text style={styles.sentMessage}>
+          <Text style={[styles.sentTitle, { color: theme.colors.current.textPrimary }]}>Check your email</Text>
+          <Text style={[styles.sentMessage, { color: theme.colors.current.textSecondary }]}>
             We've sent a magic link to {email}. Click the link in the email to sign in to MuhsinAI.
           </Text>
           <TouchableOpacity
@@ -157,7 +86,7 @@ export default function SignIn() {
               setEmail('');
             }}
           >
-            <Text style={styles.resendButtonText}>Use a different email</Text>
+            <Text style={[styles.resendButtonText, { color: '#007bff' }]}>Use a different email</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -170,7 +99,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
-    backgroundColor: '#f7f7f7',
   },
   title: {
     fontSize: 28,
@@ -180,14 +108,11 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
     marginBottom: 30,
     textAlign: 'center',
   },
   input: {
-    backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: '#ddd',
     borderRadius: 8,
     padding: 15,
     fontSize: 16,
@@ -207,44 +132,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  divider: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 20,
-  },
-  dividerLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#ddd',
-  },
-  dividerText: {
-    paddingHorizontal: 10,
-    fontSize: 14,
-    color: '#666',
-  },
-  socialButtonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  socialButton: {
-    flex: 1,
-    height: 50,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 5,
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-  },
-  socialButtonText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  socialIcon: {
-    marginRight: 10,
-  },
   sentContainer: {
     alignItems: 'center',
     padding: 20,
@@ -256,7 +143,6 @@ const styles = StyleSheet.create({
   },
   sentMessage: {
     fontSize: 16,
-    color: '#666',
     textAlign: 'center',
     marginBottom: 30,
   },
@@ -264,7 +150,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   resendButtonText: {
-    color: '#007bff',
     fontSize: 16,
   },
 });
