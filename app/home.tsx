@@ -44,36 +44,36 @@ export default function Home() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to MuhsinAI</Text>
-      <Text style={styles.email}>{user.email}</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.current.background }]}>
+      <Text style={[styles.welcome, { color: theme.colors.current.textPrimary }]}>Welcome to MuhsinAI</Text>
+      <Text style={[styles.email, { color: theme.colors.current.textSecondary }]}>{user.email}</Text>
       
-      <View style={styles.statsContainer}>
+      <View style={[styles.statsContainer, { backgroundColor: theme.colors.current.surface }]}>
         <View style={styles.stat}>
-          <Text style={styles.statValue}>{usageCount}</Text>
-          <Text style={styles.statLabel}>Plans Generated</Text>
+          <Text style={[styles.statValue, { color: theme.colors.current.textPrimary }]}>{usageCount}</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.current.textSecondary }]}>Plans Generated</Text>
         </View>
         
         <View style={styles.stat}>
-          <Text style={styles.statValue}>{isPro ? 'PRO' : 'FREE'}</Text>
-          <Text style={styles.statLabel}>Account Type</Text>
+          <Text style={[styles.statValue, { color: theme.colors.current.textPrimary }]}>{isPro ? 'PRO' : 'FREE'}</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.current.textSecondary }]}>Account Type</Text>
         </View>
       </View>
       
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Your Prayer Plans</Text>
+        <Text style={[styles.sectionTitle, { color: theme.colors.current.textPrimary }]}>Your Prayer Plans</Text>
         <TouchableOpacity 
           style={[styles.button, { backgroundColor: theme.colors.primary.main }]} 
           onPress={handleGenerate}
         >
-          <Text style={styles.buttonText}>Generate New Plan</Text>
+          <Text style={[styles.buttonText, { color: theme.colors.primary.contrast }]}>Generate New Plan</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={[styles.button, { backgroundColor: theme.colors.secondary.main }]} 
           onPress={() => router.push('/history')}
         >
-          <Text style={styles.buttonText}>View Plan History</Text>
+          <Text style={[styles.buttonText, { color: theme.colors.secondary.contrast }]}>View Plan History</Text>
         </TouchableOpacity>
       </View>
       
@@ -81,33 +81,33 @@ export default function Home() {
         style={[styles.button, { backgroundColor: theme.colors.current.border }]} 
         onPress={() => router.push('/profile')}
       >
-        <Text style={styles.buttonText}>View Profile</Text>
+        <Text style={[styles.buttonText, { color: theme.colors.current.textPrimary }]}>View Profile</Text>
       </TouchableOpacity>
       
       {!isPro && (
         <TouchableOpacity 
-          style={[styles.button, { backgroundColor: '#8E44AD' }]} 
+          style={[styles.button, { backgroundColor: theme.colors.accent.main }]} 
           onPress={() => router.push('/paywall')}
         >
-          <Text style={styles.buttonText}>Upgrade to Pro</Text>
+          <Text style={[styles.buttonText, { color: theme.colors.accent.contrast }]}>Upgrade to Pro</Text>
         </TouchableOpacity>
       )}
       
       {/* Test Environment Button for development */}
       {__DEV__ && (
         <TouchableOpacity 
-          style={[styles.button, { backgroundColor: '#FF9800', marginTop: 10 }]} 
+          style={[styles.button, { backgroundColor: theme.colors.warning.main, marginTop: 10 }]} 
           onPress={() => router.push('/test-purchases')}
         >
-          <Text style={styles.buttonText}>Test RevenueCat (Dev Only)</Text>
+          <Text style={[styles.buttonText, { color: theme.colors.warning.contrast }]}>Test RevenueCat (Dev Only)</Text>
         </TouchableOpacity>
       )}
       
       <TouchableOpacity 
-        style={styles.signOutButton} 
+        style={[styles.signOutButton]} 
         onPress={signOut}
       >
-        <Text style={styles.signOutText}>Sign Out</Text>
+        <Text style={[styles.signOutText, { color: theme.colors.error.main }]}>Sign Out</Text>
       </TouchableOpacity>
     </View>
   );
@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
   },
   welcome: {
     fontSize: 28,
@@ -128,7 +127,6 @@ const styles = StyleSheet.create({
   },
   email: {
     fontSize: 16,
-    color: '#666',
     marginBottom: 30,
     textAlign: 'center',
   },
@@ -137,7 +135,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginBottom: 30,
     paddingVertical: 20,
-    backgroundColor: '#f7f7f7',
     borderRadius: 12,
   },
   stat: {
@@ -150,7 +147,6 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 14,
-    color: '#666',
   },
   section: {
     width: '100%',
@@ -169,7 +165,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   buttonText: {
-    color: '#fff',
     fontSize: 16,
     fontWeight: '600',
   },
@@ -179,7 +174,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   signOutText: {
-    color: '#ff3b30',
     fontSize: 16,
   },
 });

@@ -79,14 +79,26 @@ __tests__/            # Unit tests
    cp .env.example .env
    ```
    
-   Edit the `.env` file and fill in your Supabase credentials:
+   Edit the `.env` file and fill in your credentials:
    
-   ```
+   ```bash
+   # Required - Get these from your Supabase dashboard
    SUPABASE_URL=https://your-project-id.supabase.co
    SUPABASE_ANON_KEY=your-supabase-anon-key
+   
+   # For backend - Add to your Supabase Edge Function environment
+   JWT_SECRET=your-jwt-secret
+   OPENAI_API_KEY=sk-your-openai-key
+   
+   # For testing purchases (optional)
+   REVENUECAT_TEST_KEY=test_your-test-key
+   
+   # For production (only needed when deploying)
+   REVENUECAT_APPLE_API_KEY=appl_your-apple-key
+   REVENUECAT_GOOGLE_API_KEY=goog_your-google-key
    ```
    
-   You can find these values in your Supabase dashboard under Project Settings > API.
+   **🔒 Security Note**: Never commit your actual API keys to the repository. The `.env` file is gitignored for security.
 
 3. Verify your environment variables:
 

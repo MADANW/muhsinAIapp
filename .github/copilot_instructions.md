@@ -24,10 +24,13 @@
 
 ## Guardrails for Suggestions
 
-* Never put API keys in the client. All OpenAI calls go through the `plan` Edge Function
+* **Never put API keys in the client code or commit them to the repository**. All sensitive keys go in `.env` (gitignored)
+* All OpenAI calls go through the `plan` Edge Function on Supabase backend
+* Environment variables are accessed via `app.config.js` → `Constants.expoConfig.extra` 
 * Before generating a plan, **check**: if `!isPro && usageCount >= 3` → navigate `/paywall`
 * After successful plan response, `incUsage()` and route to `/plan`
 * When purchase completes, set `isPro=true` (check RC entitlement `pro`)
+* Use `.env.example` as a template for required environment variables
 
 ## Tasks Copilot Should Help With
 

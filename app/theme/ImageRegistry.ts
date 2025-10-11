@@ -42,7 +42,7 @@ interface ImageRegistry {
 }
 
 // Use a placeholder for images that aren't available yet
-const placeholderImage = require('../../assets/images/nobg.ico');
+const placeholderImage = require('../../assets/images/png/nobg.png');
 
 /**
  * Register all images here
@@ -54,10 +54,10 @@ const placeholderImage = require('../../assets/images/nobg.ico');
  */
 export const Images: ImageRegistry = {
   logo: {
-    main: require('../../assets/images/logo.ico'),
-    small: require('../../assets/images/logo.ico'),
-    inverse: require('../../assets/images/inverse.ico'),
-    noBg: require('../../assets/images/nobg.ico'),
+    main: require('../../assets/images/png/nobg.png'),
+    small: require('../../assets/images/png/nobg.png'),
+    inverse: require('../../assets/images/png/nobg.png'),
+    noBg: require('../../assets/images/png/nobg.png'),
   },
   
   illustrations: {

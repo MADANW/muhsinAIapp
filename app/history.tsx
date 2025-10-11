@@ -2,22 +2,22 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import {
-    ActivityIndicator,
-    Alert,
-    Animated,
-    FlatList,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  ActivityIndicator,
+  Alert,
+  Animated,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { usePlanAnalytics, useScreenTracking } from './lib/analytics/analytics.hooks';
 import * as Animations from './lib/animations';
 import { supabase } from './lib/auth/client';
-import { createError, getErrorMessage, PlanError } from './lib/errors';
-import { logger } from './lib/logger';
 import { useAuth } from './lib/auth/provider';
 import AnimatedCard from './lib/components/AnimatedCard';
+import { createError, getErrorMessage, PlanError } from './lib/errors';
+import { logger } from './lib/logger';
 import { useTheme } from './theme/ThemeProvider';
 
 // Types for plan data

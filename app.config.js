@@ -7,6 +7,8 @@ module.exports = ({ config }) => {
     extra: {
       SUPABASE_URL: process.env.SUPABASE_URL,
       SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
+      REVENUECAT_APPLE_API_KEY: process.env.REVENUECAT_APPLE_API_KEY || process.env.REVENUECAT_TEST_KEY,
+      REVENUECAT_GOOGLE_API_KEY: process.env.REVENUECAT_GOOGLE_API_KEY || process.env.REVENUECAT_TEST_KEY,
       eas: {
         projectId: process.env.EAS_PROJECT_ID,
       },
