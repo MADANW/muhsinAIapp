@@ -82,7 +82,20 @@ export const colors = {
     contrast: '#FFFFFF' // Text on error
   },
   
-  // Light mode UI colors
+  // Unified dark theme UI colors (used for both light and dark modes on web)
+  unified: {
+    background: '#0F1419',                    // Very dark background
+    surface: '#1A1F2E',                       // Dark surface for cards
+    surfaceElevated: '#242938',               // Slightly elevated surface
+    border: '#2C3444',                        // Subtle border color
+    textPrimary: '#E6E8EB',                   // Light text for readability
+    textSecondary: '#9CA3AF',                 // Muted text for secondary content
+    textDisabled: '#6B7280',                  // Disabled text
+    divider: '#374151',                       // Divider lines
+    overlay: 'rgba(0, 0, 0, 0.8)',          // Modal/overlay background
+  },
+  
+  // Light mode UI colors (kept for mobile app compatibility)
   light: {
     background: brandConfig.colors.offWhite,   // Page background
     surface: brandConfig.colors.white,         // Card/elevated surface
@@ -93,7 +106,7 @@ export const colors = {
     divider: '#EEEEEE'                         // Divider lines
   },
   
-  // Dark mode UI colors
+  // Dark mode UI colors (kept for mobile app compatibility)
   dark: {
     background: '#121212',                    // Dark background
     surface: '#1E1E1E',                       // Card/elevated surface

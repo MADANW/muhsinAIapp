@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useColorScheme } from 'react-native';
+import { Platform, useColorScheme } from 'react-native';
 import { borderRadius, colors, shadows, spacing, typography } from './constants';
 
 /**
@@ -7,9 +7,10 @@ import { borderRadius, colors, shadows, spacing, typography } from './constants'
  */
 interface ThemeContextType {
   isDarkMode: boolean;
+  isWeb: boolean;
   toggleTheme: () => void;
   colors: typeof colors & {
-    current: typeof colors.light | typeof colors.dark;
+    current: typeof colors.light | typeof colors.dark | typeof colors.unified;
   };
   typography: typeof typography;
   spacing: typeof spacing;
@@ -24,6 +25,9 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
  * Theme provider component
  */
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Check if we're running on web
+  const isWeb = Platform.OS === 'web';
+  
   // Get device color scheme
   const deviceColorScheme = useColorScheme();
   
@@ -31,28 +35,39 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [isManuallyToggled, setIsManuallyToggled] = useState(false);
   
   // State to track current dark mode setting
-  const [isDarkMode, setIsDarkMode] = useState(deviceColorScheme === 'dark');
+  // On web, we always use dark mode for the unified theme
+  const [isDarkMode, setIsDarkMode] = useState(isWeb ? true : deviceColorScheme === 'dark');
 
-  // Update theme based on device settings, unless manually set
+  // Update theme based on device settings, unless manually set or on web
   useEffect(() => {
-    if (!isManuallyToggled) {
+    if (!isManuallyToggled && !isWeb) {
       setIsDarkMode(deviceColorScheme === 'dark');
     }
-  }, [deviceColorScheme, isManuallyToggled]);
+  }, [deviceColorScheme, isManuallyToggled, isWeb]);
 
-  // Function to toggle theme
+  // Function to toggle theme (disabled on web for unified experience)
   const toggleTheme = () => {
+    if (isWeb) return; // Don't allow theme toggle on web
     setIsDarkMode(prev => !prev);
     setIsManuallyToggled(true);
   };
 
+  // Determine which color scheme to use
+  const getCurrentColors = () => {
+    if (isWeb) {
+      return colors.unified; // Always use unified dark theme on web
+    }
+    return isDarkMode ? colors.dark : colors.light;
+  };
+
   // Prepare the theme context value
   const themeContextValue: ThemeContextType = {
-    isDarkMode,
+    isDarkMode: isWeb ? true : isDarkMode, // Always dark on web
+    isWeb,
     toggleTheme,
     colors: {
       ...colors,
-      current: isDarkMode ? colors.dark : colors.light,
+      current: getCurrentColors(),
     },
     typography,
     spacing,

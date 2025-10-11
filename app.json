@@ -28,15 +28,41 @@
       "favicon": "./assets/images/png/logo.png",
       "bundleIdentifier": "com.muhsinai.web",
       "name": "MuhsinAI - AI-Powered Islamic Prayer Plans",
+      "shortName": "MuhsinAI",
       "description": "Transform your spiritual practice with AI-generated personalized Islamic prayer plans. Get daily guidance, track your progress, and deepen your connection with Allah.",
       "lang": "en",
       "dir": "auto",
       "orientation": "any",
       "startUrl": "/",
       "display": "standalone",
-      "backgroundColor": "#ffffff",
-      "themeColor": "#22C55E",
-      "crossorigin": "anonymous"
+      "backgroundColor": "#0F1419",
+      "themeColor": "#2E4A35",
+      "crossorigin": "anonymous",
+      "scope": "/",
+      "preferRelatedApplications": false,
+      "relatedApplications": [],
+      "icons": [
+        {
+          "src": "./assets/images/png/logo.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "./assets/images/png/logo.png", 
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ],
+      "categories": ["lifestyle", "productivity", "spirituality"],
+      "screenshots": [],
+      "meta": {
+        "apple-mobile-web-app-capable": "yes",
+        "apple-mobile-web-app-status-bar-style": "black-translucent",
+        "apple-mobile-web-app-title": "MuhsinAI",
+        "mobile-web-app-capable": "yes",
+        "msapplication-TileColor": "#2E4A35",
+        "msapplication-config": "none"
+      }
     },
     "plugins": [
       "expo-router",
@@ -46,9 +72,9 @@
           "image": "./assets/images/png/logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
+          "backgroundColor": "#0F1419",
           "dark": {
-            "backgroundColor": "#000000"
+            "backgroundColor": "#0F1419"
           }
         }
       ]

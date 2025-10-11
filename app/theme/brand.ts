@@ -30,8 +30,8 @@ export const brandConfig = {
     
     // UI Feedback colors - using semantic colors that complement the brand
     success: '#3D6145', // Using secondary green for success
-    warning: '#E9B949', // Gold/yellow for warnings
-    danger: '#D64045', // Red for errors/destructive actions
+    warning: '#9f7d2dff', // Gold/yellow for warnings
+    danger: '#75181bff', // Red for errors/destructive actions
   },
   
   // Typography settings
