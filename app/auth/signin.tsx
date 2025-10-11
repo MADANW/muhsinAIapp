@@ -4,15 +4,15 @@ import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import {
-    ActivityIndicator,
-    ImageBackground,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
+  ActivityIndicator,
+  ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { useAuth } from '../lib/auth/provider';
 import { authLogger } from '../lib/logger';
@@ -27,10 +27,9 @@ import { useTheme } from '../theme/ThemeProvider';
 export default function SignInScreen() {
   const router = useRouter();
   const theme = useTheme();
-  const { signIn, signInWithGoogle, signInWithApple } = useAuth();
+  const { signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [socialLoading, setSocialLoading] = useState<'google' | 'apple' | null>(null);
   const [error, setError] = useState<string | null>(null);
   
   // Function to handle sign in with magic link
@@ -61,51 +60,6 @@ export default function SignInScreen() {
       setIsLoading(false);
     }
   };
-  
-  // Function to handle sign in with Google
-  const handleGoogleSignIn = async () => {
-    setSocialLoading('google');
-    setError(null);
-    
-    try {
-      const { success, error } = await signInWithGoogle();
-      
-      if (!success) {
-        setError(error?.message || 'Failed to sign in with Google. Please try again.');
-        authLogger.error('Google sign in error:', error);
-      }
-    } catch (error) {
-      setError('Failed to sign in with Google. Please try again.');
-      authLogger.error('Google sign in error:', error);
-    } finally {
-      setSocialLoading(null);
-    }
-  };
-  
-  // Function to handle sign in with Apple
-  const handleAppleSignIn = async () => {
-    setSocialLoading('apple');
-    setError(null);
-    
-    try {
-      const { success, error } = await signInWithApple();
-      
-      if (!success) {
-        setError(error?.message || 'Failed to sign in with Apple. Please try again.');
-        authLogger.error('Apple sign in error:', error);
-      }
-    } catch (error) {
-      setError('Failed to sign in with Apple. Please try again.');
-      authLogger.error('Apple sign in error:', error);
-    } finally {
-      setSocialLoading(null);
-    }
-  };
-
-  // Function to navigate back to the main screen
-  const handleBack = () => {
-    router.back();
-  };
 
   return (
     <ImageBackground 
@@ -114,14 +68,6 @@ export default function SignInScreen() {
       imageStyle={styles.backgroundImage}
     >
       <StatusBar style="light" />
-      
-      {/* Back button */}
-      <TouchableOpacity 
-        style={styles.backButton}
-        onPress={handleBack}
-      >
-        <FontAwesome name="arrow-left" size={24} color="#fff" />
-      </TouchableOpacity>
       
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -132,7 +78,7 @@ export default function SignInScreen() {
             <Image source={Images.logo.inverse} style={styles.logo} />
           </View>
           
-          <View style={styles.formContainer}>
+          <View style={[styles.formContainer, { backgroundColor: theme.colors.current.background }]}>
             <Text style={[styles.title, { color: theme.colors.current.textPrimary }]}>
               Welcome to MuhsinAI
             </Text>
@@ -147,7 +93,8 @@ export default function SignInScreen() {
                   styles.input,
                   { 
                     borderColor: error ? theme.colors.error.main : theme.colors.current.border,
-                    color: theme.colors.current.textPrimary
+                    color: theme.colors.current.textPrimary,
+                    backgroundColor: theme.colors.current.surface
                   }
                 ]}
                 placeholder="Enter your email"
@@ -182,50 +129,6 @@ export default function SignInScreen() {
                 <Text style={styles.signInButtonText}>Send Magic Link</Text>
               )}
             </TouchableOpacity>
-            
-            <View style={styles.divider}>
-              <View style={[styles.dividerLine, { backgroundColor: theme.colors.current.border }]} />
-              <Text style={[styles.dividerText, { color: theme.colors.current.textSecondary }]}>
-                Or continue with
-              </Text>
-              <View style={[styles.dividerLine, { backgroundColor: theme.colors.current.border }]} />
-            </View>
-            
-            <View style={styles.socialButtonsContainer}>
-              <TouchableOpacity
-                style={[styles.socialButton, { borderColor: theme.colors.current.border }]}
-                onPress={handleGoogleSignIn}
-                disabled={isLoading || socialLoading !== null}
-              >
-                {socialLoading === 'google' ? (
-                  <ActivityIndicator size="small" color={theme.colors.current.textPrimary} />
-                ) : (
-                  <>
-                    <FontAwesome name="google" size={18} color={theme.colors.current.textPrimary} style={styles.socialIcon} />
-                    <Text style={[styles.socialButtonText, { color: theme.colors.current.textPrimary }]}>
-                      Google
-                    </Text>
-                  </>
-                )}
-              </TouchableOpacity>
-              
-              <TouchableOpacity
-                style={[styles.socialButton, { borderColor: theme.colors.current.border }]}
-                onPress={handleAppleSignIn}
-                disabled={isLoading || socialLoading !== null}
-              >
-                {socialLoading === 'apple' ? (
-                  <ActivityIndicator size="small" color={theme.colors.current.textPrimary} />
-                ) : (
-                  <>
-                    <FontAwesome name="apple" size={22} color={theme.colors.current.textPrimary} style={styles.socialIcon} />
-                    <Text style={[styles.socialButtonText, { color: theme.colors.current.textPrimary }]}>
-                      Apple
-                    </Text>
-                  </>
-                )}
-              </TouchableOpacity>
-            </View>
           </View>
           
           <View style={styles.footer}>
@@ -282,7 +185,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   formContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: 12,
     padding: 24,
     marginHorizontal: 20,
@@ -308,7 +210,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 16,
     fontSize: 16,
-    backgroundColor: '#FFFFFF',
   },
   errorText: {
     fontSize: 14,
@@ -328,39 +229,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
-  },
-  divider: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 20,
-  },
-  dividerLine: {
-    flex: 1,
-    height: 1,
-  },
-  dividerText: {
-    paddingHorizontal: 10,
-    fontSize: 14,
-  },
-  socialButtonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  socialButton: {
-    flex: 1,
-    height: 50,
-    borderWidth: 1,
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 5,
-    flexDirection: 'row',
-  },
-  socialButtonText: {
-    fontSize: 16,
-  },
-  socialIcon: {
-    marginRight: 10,
   },
   footer: {
     marginTop: 20,

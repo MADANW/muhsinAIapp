@@ -22,24 +22,68 @@ export default function RootLayout() {
   }, []);
   
   useEffect(() => {
-    // Handle deep links (magic link authentication)
+    // Handle deep links (magic link and OAuth authentication)
     const handleDeepLink = (event: { url: string }) => {
       const url = event.url;
-      if (url && url.includes('#access_token=')) {
-        // Handle the magic link
-        const [_, queryString] = url.split('#');
+      console.log('Deep link received:', url);
+      
+      // Handle different URL formats that Supabase might send
+      if (url && (url.includes('access_token=') || url.includes('token_hash=') || url.includes('confirm'))) {
+        let queryString = '';
+        
+        // Handle both hash (#) and query (?) parameter formats
+        if (url.includes('#')) {
+          queryString = url.split('#')[1];
+        } else if (url.includes('?')) {
+          queryString = url.split('?')[1];
+        }
+        
         const params = new URLSearchParams(queryString);
         const accessToken = params.get('access_token');
         const refreshToken = params.get('refresh_token');
+        const tokenHash = params.get('token_hash');
         const type = params.get('type');
         
-        if (accessToken && type === 'recovery' && refreshToken) {
-          // Set the session manually
+        console.log('Auth params:', { 
+          accessToken: !!accessToken, 
+          refreshToken: !!refreshToken, 
+          tokenHash: !!tokenHash,
+          type,
+          fullUrl: url 
+        });
+        
+        // Handle magic link with token_hash (new Supabase format)
+        if (tokenHash && type) {
+          console.log('Handling magic link with token_hash');
+          supabase.auth.verifyOtp({
+            token_hash: tokenHash,
+            type: type as any,
+          }).then(({ data, error }) => {
+            if (error) {
+              console.error('Error verifying OTP:', error);
+            } else {
+              console.log('OTP verified successfully:', data);
+            }
+          });
+        }
+        // Handle legacy format with access_token
+        else if (accessToken && refreshToken) {
+          console.log('Handling legacy format with access_token');
           supabase.auth.setSession({
             access_token: accessToken,
             refresh_token: refreshToken,
+          }).then(({ data, error }) => {
+            if (error) {
+              console.error('Error setting session:', error);
+            } else {
+              console.log('Session set successfully:', data);
+            }
           });
+        } else {
+          console.log('Unable to handle auth URL format:', url);
         }
+      } else {
+        console.log('URL does not contain auth tokens:', url);
       }
     };
 

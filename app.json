@@ -10,11 +10,11 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.madanw.muhsinai",
+      "bundleIdentifier": "com.muhsinai.app",
       "buildNumber": "1"
     },
     "android": {
-      "package": "com.madanw.muhsinai",
+      "package": "com.muhsinai.app",
       "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
@@ -25,7 +25,18 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/png/logo.png"
+      "favicon": "./assets/images/png/logo.png",
+      "bundleIdentifier": "com.muhsinai.web",
+      "name": "MuhsinAI - AI-Powered Islamic Prayer Plans",
+      "description": "Transform your spiritual practice with AI-generated personalized Islamic prayer plans. Get daily guidance, track your progress, and deepen your connection with Allah.",
+      "lang": "en",
+      "dir": "auto",
+      "orientation": "any",
+      "startUrl": "/",
+      "display": "standalone",
+      "backgroundColor": "#ffffff",
+      "themeColor": "#22C55E",
+      "crossorigin": "anonymous"
     },
     "plugins": [
       "expo-router",

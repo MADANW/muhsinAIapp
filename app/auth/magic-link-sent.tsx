@@ -3,11 +3,11 @@ import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import {
-    ImageBackground,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { Images } from '../theme/ImageRegistry';
 import { useTheme } from '../theme/ThemeProvider';
@@ -39,7 +39,7 @@ export default function MagicLinkSentScreen() {
           <Image source={Images.logo.inverse} style={styles.logo} />
         </View>
         
-        <View style={styles.contentContainer}>
+        <View style={[styles.contentContainer, { backgroundColor: theme.colors.current.background }]}>
           <Text style={[styles.title, { color: theme.colors.current.textPrimary }]}>
             Check your email
           </Text>
@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   contentContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: 12,
     padding: 24,
     marginHorizontal: 20,

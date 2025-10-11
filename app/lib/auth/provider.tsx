@@ -1,7 +1,7 @@
 import { Session, User } from '@supabase/supabase-js';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useStore } from '../store';
-import { getCurrentUser, getSession, signInWithApple, signInWithGoogle, supabase } from './client';
+import { getCurrentUser, getSession, supabase } from './client';
 
 // Define the Auth Context types
 type AuthContextType = {
@@ -9,8 +9,6 @@ type AuthContextType = {
   session: Session | null;
   isLoading: boolean;
   signIn: (email: string) => Promise<{ success: boolean; error?: any }>;
-  signInWithGoogle: () => Promise<{ success: boolean; error?: any }>;
-  signInWithApple: () => Promise<{ success: boolean; error?: any }>;
   signOut: () => Promise<void>;
   refreshSession: () => Promise<void>;
 };
@@ -169,13 +167,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          // You can customize email settings here
-          emailRedirectTo: 'muhsinai://', // Deep link back to the app
+          // Deep link back to the app
+          emailRedirectTo: 'muhsinai://',
+          // Optionally specify should create user if doesn't exist
+          shouldCreateUser: true,
         },
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Magic link error:', error);
+        throw error;
+      }
       
+      console.log('Magic link sent successfully to:', email);
       return { success: true };
     } catch (error) {
       console.error('Error signing in:', error);
@@ -219,8 +223,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         session,
         isLoading,
         signIn,
-        signInWithGoogle,
-        signInWithApple,
         signOut,
         refreshSession,
       }}
