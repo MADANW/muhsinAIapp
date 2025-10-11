@@ -17,9 +17,9 @@ export default function Index() {
       });
       
       if (user) {
-        router.replace('/home' as any);
+        router.replace('/home');
       } else {
-        router.replace('/auth/signin' as any);
+        router.replace('/auth/signin');
       }
     }
   }, [user, isLoading, router]);
@@ -42,7 +42,7 @@ export default function Index() {
           <Text style={styles.info}>SUPABASE_URL: {SUPABASE_URL ? "Set ✓" : "Not set ✗"}</Text>
           <Text style={styles.info}>SUPABASE_ANON_KEY: {SUPABASE_ANON_KEY ? "Set ✓" : "Not set ✗"}</Text>
           <Text style={styles.info}>User: {user ? user.email : "Not signed in"}</Text>
-          <Text style={styles.button} onPress={() => router.replace('/auth/signin' as any)}>
+          <Text style={styles.button} onPress={() => router.replace('/auth/signin')}>
             Go to Sign In
           </Text>
         </View>

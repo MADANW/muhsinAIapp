@@ -5,6 +5,8 @@
  * with platforms like PostHog, Firebase Analytics, or Segment.
  */
 
+import { analyticsLogger } from '../logger';
+
 // Event types we want to track throughout the app
 export enum AnalyticsEvent {
   // Plan-related events
@@ -59,9 +61,7 @@ class AnalyticsService {
     this.debug = options?.debug || false;
     this.isInitialized = true;
     
-    if (this.debug) {
-      console.log('[Analytics] Initialized');
-    }
+    analyticsLogger.info('Initialized');
     
     // In the future, initialize third-party analytics SDKs here
   }
@@ -73,9 +73,7 @@ class AnalyticsService {
     this._userId = userId;
     this.userProperties = userProperties || {};
     
-    if (this.debug) {
-      console.log(`[Analytics] Identified user ${userId}`, userProperties);
-    }
+    analyticsLogger.info(`Identified user ${userId}`, userProperties);
     
     // In the future, set user ID in third-party analytics SDKs
   }
@@ -87,9 +85,7 @@ class AnalyticsService {
     this._userId = null;
     this.userProperties = {};
     
-    if (this.debug) {
-      console.log('[Analytics] Reset user identity');
-    }
+    analyticsLogger.info('Reset user identity');
     
     // In the future, reset user ID in third-party analytics SDKs
   }
@@ -99,13 +95,11 @@ class AnalyticsService {
    */
   track(event: AnalyticsEvent | string, properties?: EventProperties) {
     if (!this.isInitialized) {
-      console.warn('[Analytics] Attempting to track event before initialization');
+      analyticsLogger.warn('Attempting to track event before initialization');
       return;
     }
     
-    if (this.debug) {
-      console.log(`[Analytics] Event: ${event}`, properties);
-    }
+    analyticsLogger.debug(`Event: ${event}`, properties);
     
     // In the future, track event with third-party analytics SDKs
   }
@@ -129,9 +123,7 @@ class AnalyticsService {
       ...properties
     };
     
-    if (this.debug) {
-      console.log('[Analytics] Updated user properties', properties);
-    }
+    analyticsLogger.debug('Updated user properties', properties);
     
     // In the future, update user properties in third-party analytics SDKs
   }

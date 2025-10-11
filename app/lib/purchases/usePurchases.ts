@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { CustomerInfo, PurchasesPackage } from 'react-native-purchases';
 import { useAuth } from '../auth/provider';
+import { createError, getErrorMessage, PurchaseError } from '../errors';
+import { purchasesLogger } from '../logger';
 import * as Purchases from '../purchases';
 
 /**
@@ -88,11 +90,22 @@ export const usePurchases = () => {
       setIsPro(!!proEntitlement);
       
       return { success: true, customerInfo: info };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const purchaseError = createError<PurchaseError>(
+        'PURCHASE_ERROR',
+        getErrorMessage(error),
+        { 
+          userCancelled: error && typeof error === 'object' && 'userCancelled' in error ? 
+            Boolean(error.userCancelled) : false
+        }
+      );
+      
+      purchasesLogger.error('Purchase failed:', purchaseError);
+      
       return { 
         success: false, 
-        error, 
-        userCancelled: error.userCancelled 
+        error: purchaseError, 
+        userCancelled: purchaseError.userCancelled
       };
     }
   }, []);

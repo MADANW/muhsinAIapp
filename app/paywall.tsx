@@ -4,22 +4,28 @@ import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useState } from 'react';
 import {
-    ActivityIndicator,
-    Alert,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    useWindowDimensions,
-    View,
+  ActivityIndicator,
+  Alert,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
 } from 'react-native';
 import { PurchasesPackage } from 'react-native-purchases';
+import { Assets } from './lib/assetRegistry';
+import { purchasesLogger } from './lib/logger';
 import { usePurchases } from './lib/purchases/usePurchases';
 import { useTheme } from './theme/ThemeProvider';
 
 // Feature list for Pro subscription
-const PRO_FEATURES = [
+const PRO_FEATURES: Array<{
+  icon: 'check' | 'star' | 'cloud' | 'bell';
+  title: string;
+  description: string;
+}> = [
   { icon: 'check', title: 'Unlimited Prayer Plans', description: 'Generate as many plans as you need' },
   { icon: 'star', title: 'Advanced Customization', description: 'Tailor plans to your specific needs' },
   { icon: 'cloud', title: 'Cloud Synchronization', description: 'Access your plans on all your devices' },
@@ -68,7 +74,7 @@ export default function Paywall() {
         Alert.alert('Purchase Failed', error?.message || 'There was an issue processing your payment.');
       }
     } catch (error) {
-      console.error('Purchase error:', error);
+      purchasesLogger.error('Purchase error:', error);
     } finally {
       setPurchasing(false);
     }
@@ -89,7 +95,7 @@ export default function Paywall() {
         Alert.alert('No Subscription Found', 'We couldn\'t find an active subscription linked to your account.');
       }
     } catch (error) {
-      console.error('Restore error:', error);
+      purchasesLogger.error('Restore error:', error);
     } finally {
       setRestoring(false);
     }
@@ -111,13 +117,14 @@ export default function Paywall() {
       
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
+          {/* Using asset registry for more reliable imports */}
           <Image
-            source={require('../assets/images/nobg.ico')}
+            source={Assets.logos.nobg}
             style={styles.logo}
             contentFit="contain"
           />
           <Text style={[styles.title, { color: theme.colors.current.textPrimary }]}>
-            Upgrade to MuhsinAI Pro
+            Upgrade to Pro
           </Text>
           <Text style={[styles.subtitle, { color: theme.colors.current.textSecondary }]}>
             Unlock the full power of MuhsinAI
@@ -129,7 +136,7 @@ export default function Paywall() {
           {PRO_FEATURES.map((feature, index) => (
             <View key={index} style={styles.featureItem}>
               <View style={[styles.featureIcon, { backgroundColor: theme.colors.primary.main }]}>
-                <FontAwesome name={feature.icon as any} size={16} color="#fff" />
+                <FontAwesome name={feature.icon} size={16} color="#fff" />
               </View>
               <View style={styles.featureText}>
                 <Text style={[styles.featureTitle, { color: theme.colors.current.textPrimary }]}>

@@ -53,9 +53,9 @@ export const brandConfig = {
   assets: {
     // Logo variations
     logo: {
-      primary: require('../../assets/images/logo.ico'),
-      noBg: require('../../assets/images/nobg.ico'),
-      inverse: require('../../assets/images/inverse.ico'),
+      primary: require('../../assets/images/png/logo.png'),
+      noBg: require('../../assets/images/png/nobg.png'),
+      inverse: require('../../assets/images/png/inverse.png'),
       // Add variations if needed:
       // horizontal: require('../../assets/images/logo-horizontal.png'),
       // monochrome: require('../../assets/images/logo-mono.png'),

@@ -53,7 +53,7 @@ export default function Plan() {
   // Check if user is authenticated
   useEffect(() => {
     if (!user || !session) {
-      router.replace('/auth/signin' as any);
+      router.replace('/auth/signin');
     }
   }, [user, session, router]);
 
@@ -102,7 +102,7 @@ export default function Plan() {
           'You\'ve reached the free plan limit. Upgrade to Pro for unlimited plans.',
           [
             { text: 'Cancel', style: 'cancel' },
-            { text: 'Upgrade', onPress: () => router.push('/paywall' as any) }
+            { text: 'Upgrade', onPress: () => router.push('/paywall') }
           ]
         );
       } else {

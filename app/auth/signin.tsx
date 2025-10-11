@@ -15,6 +15,7 @@ import {
     View
 } from 'react-native';
 import { useAuth } from '../lib/auth/provider';
+import { authLogger } from '../lib/logger';
 import { Images } from '../theme/ImageRegistry';
 import { useTheme } from '../theme/ThemeProvider';
 
@@ -48,14 +49,14 @@ export default function SignInScreen() {
       
       if (success) {
         // Navigate to the magic link sent screen
-        router.push('/auth/magic-link-sent' as any);
+        router.push('/auth/magic-link-sent');
       } else {
         setError(error?.message || 'Failed to send magic link. Please try again.');
-        console.error('Sign in error:', error);
+        authLogger.error('Sign in error:', error);
       }
     } catch (error) {
       setError('Failed to send magic link. Please try again.');
-      console.error('Sign in error:', error);
+      authLogger.error('Sign in error:', error);
     } finally {
       setIsLoading(false);
     }
@@ -71,11 +72,11 @@ export default function SignInScreen() {
       
       if (!success) {
         setError(error?.message || 'Failed to sign in with Google. Please try again.');
-        console.error('Google sign in error:', error);
+        authLogger.error('Google sign in error:', error);
       }
     } catch (error) {
       setError('Failed to sign in with Google. Please try again.');
-      console.error('Google sign in error:', error);
+      authLogger.error('Google sign in error:', error);
     } finally {
       setSocialLoading(null);
     }
@@ -91,11 +92,11 @@ export default function SignInScreen() {
       
       if (!success) {
         setError(error?.message || 'Failed to sign in with Apple. Please try again.');
-        console.error('Apple sign in error:', error);
+        authLogger.error('Apple sign in error:', error);
       }
     } catch (error) {
       setError('Failed to sign in with Apple. Please try again.');
-      console.error('Apple sign in error:', error);
+      authLogger.error('Apple sign in error:', error);
     } finally {
       setSocialLoading(null);
     }

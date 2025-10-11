@@ -14,6 +14,8 @@ import {
 import { usePlanAnalytics, useScreenTracking } from './lib/analytics/analytics.hooks';
 import { supabase } from './lib/auth/client';
 import { useAuth } from './lib/auth/provider';
+import { createError, getErrorMessage, PlanError } from './lib/errors';
+import { logger } from './lib/logger';
 import { useTheme } from './theme/ThemeProvider';
 
 // Types for plan data

@@ -14,19 +14,19 @@ export default function Home() {
   useEffect(() => {
     // If no session and not loading, redirect to sign in
     if (!session && !isLoading) {
-      router.replace('/auth/signin' as any);
+      router.replace('/auth/signin');
     }
   }, [session, isLoading, router]);
 
   const handleGenerate = async () => {
     // client-side gate: free users get 3 total generations
     if (!isPro && usageCount >= 3) {
-      router.push("/paywall" as any);
+      router.push("/paywall");
       return;
     }
 
     await incUsage();
-    router.push("/plan" as any);
+    router.push("/plan");
   };
   
   // If loading, show loading screen
@@ -71,7 +71,7 @@ export default function Home() {
         
         <TouchableOpacity 
           style={[styles.button, { backgroundColor: theme.colors.secondary.main }]} 
-          onPress={() => router.push('/history' as any)}
+          onPress={() => router.push('/history')}
         >
           <Text style={styles.buttonText}>View Plan History</Text>
         </TouchableOpacity>
@@ -79,7 +79,7 @@ export default function Home() {
       
       <TouchableOpacity 
         style={[styles.button, { backgroundColor: theme.colors.current.border }]} 
-        onPress={() => router.push('/profile' as any)}
+        onPress={() => router.push('/profile')}
       >
         <Text style={styles.buttonText}>View Profile</Text>
       </TouchableOpacity>
@@ -87,7 +87,7 @@ export default function Home() {
       {!isPro && (
         <TouchableOpacity 
           style={[styles.button, { backgroundColor: '#8E44AD' }]} 
-          onPress={() => router.push('/paywall' as any)}
+          onPress={() => router.push('/paywall')}
         >
           <Text style={styles.buttonText}>Upgrade to Pro</Text>
         </TouchableOpacity>
@@ -97,7 +97,7 @@ export default function Home() {
       {__DEV__ && (
         <TouchableOpacity 
           style={[styles.button, { backgroundColor: '#FF9800', marginTop: 10 }]} 
-          onPress={() => router.push('/test-purchases' as any)}
+          onPress={() => router.push('/test-purchases')}
         >
           <Text style={styles.buttonText}>Test RevenueCat (Dev Only)</Text>
         </TouchableOpacity>

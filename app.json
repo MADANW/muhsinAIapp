@@ -4,7 +4,7 @@
     "slug": "MuhsinAI",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.ico",
+    "icon": "./assets/images/png/logo.png",
     "scheme": "muhsinai",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -18,21 +18,21 @@
       "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/logo.ico"
+        "foregroundImage": "./assets/images/png/logo.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/logo.ico"
+      "favicon": "./assets/images/png/logo.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/logo.ico",
+          "image": "./assets/images/png/logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",

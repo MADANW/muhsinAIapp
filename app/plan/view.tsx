@@ -12,6 +12,8 @@ import {
     View
 } from 'react-native';
 import { supabase } from '../lib/auth/client';
+import { createError, getErrorMessage, PlanError } from '../lib/errors';
+import { logger } from '../lib/logger';
 import { useTheme } from '../theme/ThemeProvider';
 
 // Plan data type definitions
@@ -70,9 +72,15 @@ export default function ViewPlan() {
         }
         
         setPlan(data as unknown as Plan);
-      } catch (err: any) {
-        console.error('Error fetching plan:', err);
-        setError(err.message || 'Failed to load plan');
+      } catch (err: unknown) {
+        const planError = createError<PlanError>(
+          'PLAN_ERROR',
+          getErrorMessage(err),
+          { planId: params.id }
+        );
+        
+        logger.error('Error fetching plan:', planError);
+        setError(planError.message);
       } finally {
         setIsLoading(false);
       }
@@ -105,8 +113,15 @@ export default function ViewPlan() {
         message: shareText,
         title: 'My Daily Plan from MuhsinAI',
       });
-    } catch (err: any) {
-      Alert.alert('Sharing failed', err.message);
+    } catch (err: unknown) {
+      const appError = createError<PlanError>(
+        'PLAN_ERROR',
+        getErrorMessage(err),
+        { planId: params.id }
+      );
+      
+      logger.error('Share failed:', appError);
+      Alert.alert('Sharing failed', appError.message);
     }
   };
   

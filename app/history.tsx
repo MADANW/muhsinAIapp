@@ -14,6 +14,8 @@ import {
 import { usePlanAnalytics, useScreenTracking } from './lib/analytics/analytics.hooks';
 import * as Animations from './lib/animations';
 import { supabase } from './lib/auth/client';
+import { createError, getErrorMessage, PlanError } from './lib/errors';
+import { logger } from './lib/logger';
 import { useAuth } from './lib/auth/provider';
 import AnimatedCard from './lib/components/AnimatedCard';
 import { useTheme } from './theme/ThemeProvider';
@@ -96,13 +98,18 @@ export default function History() {
         count: data?.length || 0,
         action: 'list_view'
       });
-    } catch (err: any) {
-      console.error('Error fetching plans:', err);
-      setError('Failed to load your plans. Please try again.');
+    } catch (err: unknown) {
+      const planError = createError<PlanError>(
+        'PLAN_ERROR',
+        getErrorMessage(err)
+      );
+      
+      logger.error('Error fetching plans:', planError);
+      setError(planError.message);
       
       // Track error
       planAnalytics.trackPlanError('history_fetch_error', {
-        error: err.message
+        error: planError.message
       });
     } finally {
       setIsLoading(false);
@@ -126,9 +133,14 @@ export default function History() {
       
       // Show success message
       Alert.alert('Plan Deleted', 'The plan has been removed from your history.');
-    } catch (err: any) {
-      console.error('Error deleting plan:', err);
-      Alert.alert('Error', 'Failed to delete the plan. Please try again.');
+    } catch (err: unknown) {
+      const planError = createError<PlanError>(
+        'PLAN_ERROR',
+        getErrorMessage(err)
+      );
+      
+      logger.error('Error deleting plan:', planError);
+      Alert.alert('Error', planError.message);
     }
   };
 
@@ -238,7 +250,7 @@ export default function History() {
       </Text>
       <TouchableOpacity
         style={[styles.createButton, { backgroundColor: theme.colors.primary.main }]}
-        onPress={() => router.push('/plan' as any)}
+        onPress={() => router.push('/plan')}
       >
         <Text style={styles.createButtonText}>Create New Plan</Text>
       </TouchableOpacity>
@@ -300,7 +312,7 @@ export default function History() {
       {!isLoading && plans.length > 0 && (
         <TouchableOpacity
           style={[styles.floatingButton, { backgroundColor: theme.colors.primary.main }]}
-          onPress={() => router.push('/plan' as any)}
+          onPress={() => router.push('/plan')}
         >
           <FontAwesome name="plus" size={24} color="#FFFFFF" />
         </TouchableOpacity>

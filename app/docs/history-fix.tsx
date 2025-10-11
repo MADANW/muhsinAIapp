@@ -247,7 +247,7 @@ export default function History() {
       </Text>
       <TouchableOpacity
         style={[styles.createButton, { backgroundColor: theme.colors.primary.main }]}
-        onPress={() => router.push('/plan' as any)}
+        onPress={() => router.push('/plan')}
       >
         <Text style={styles.createButtonText}>Create New Plan</Text>
       </TouchableOpacity>
@@ -309,7 +309,7 @@ export default function History() {
       {!isLoading && plans.length > 0 && (
         <TouchableOpacity
           style={[styles.floatingButton, { backgroundColor: theme.colors.primary.main }]}
-          onPress={() => router.push('/plan' as any)}
+          onPress={() => router.push('/plan')}
         >
           <FontAwesome name="plus" size={24} color="#FFFFFF" />
         </TouchableOpacity>
